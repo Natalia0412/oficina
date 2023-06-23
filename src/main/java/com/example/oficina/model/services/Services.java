@@ -35,7 +35,7 @@ public class Services {
     private Client client;
     @OneToOne(cascade = CascadeType.ALL )
     @JoinColumn(name = "car_id", foreignKey = @ForeignKey(name = "UK_SERVICES_CAR"))
-    private Car carId;
+    private Car car;
     @OneToOne(cascade = CascadeType.ALL )
     @JoinColumn(name = "mechanic_id", foreignKey = @ForeignKey(name = "UK_SERVICES_MECHANIC"))
     private Mechanic mechanic;
