@@ -1,0 +1,40 @@
+package com.example.oficina.controller.car;
+
+import com.example.oficina.dto.car.CarDto;
+import com.example.oficina.model.car.Car;
+import com.example.oficina.service.car.CarService;
+import org.apache.coyote.Response;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/v1/clients/{idClient}/cars")
+public class CarController {
+    @Autowired
+    private CarService service;
+
+    @PostMapping()
+    public ResponseEntity<Car> postCar(@PathVariable String idClient, @RequestBody CarDto carDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.createCar(idClient, carDto));
+    }
+
+    @GetMapping("/{idCar}")
+    public ResponseEntity<Car> getCarbyId(@PathVariable String idClient, @PathVariable String idCar) {
+        return ResponseEntity.ok(service.getCarById(idClient, idCar));
+    }
+
+    @PatchMapping("/{idCar}")
+    public ResponseEntity<Car> updatePartial(@PathVariable String idClient, @PathVariable String idCar, @RequestBody CarDto carDto) {
+        return ResponseEntity.ok(service.updatePartial(idClient,idCar,carDto));
+    }
+
+    @DeleteMapping("/{idCar}")
+    public ResponseEntity<?> deleteCar(@PathVariable String idClient, @PathVariable String idCar) {
+        service.deleteCar(idClient, idCar);
+        return  ResponseEntity.noContent().build();
+    }
+}
