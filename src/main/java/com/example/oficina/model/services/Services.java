@@ -35,7 +35,11 @@ public class Services {
     private Client client;
     @OneToOne(cascade = CascadeType.ALL )
     @JoinColumn(name = "car_id", foreignKey = @ForeignKey(name = "UK_SERVICES_CAR"))
+<<<<<<< HEAD
     private Car car;
+=======
+    private Car carId;
+>>>>>>> 809778080c47413e1e0100ec2203ba01acd30381
     @OneToOne(cascade = CascadeType.ALL )
     @JoinColumn(name = "mechanic_id", foreignKey = @ForeignKey(name = "UK_SERVICES_MECHANIC"))
     private Mechanic mechanic;
