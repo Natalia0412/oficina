@@ -4,11 +4,13 @@ import com.example.oficina.dto.part.PartDto;
 import com.example.oficina.map.part.PartMap;
 import com.example.oficina.model.part.Part;
 import com.example.oficina.repository.part.PartRepository;
+import com.example.oficina.service.exceptions.ResourceIlegalArgumentException;
 import com.example.oficina.service.exceptions.ResourceNotFoundException;
 import com.example.oficina.utils.part.PartMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -34,5 +36,11 @@ public class PartService {
         Part part = this.getByIdPart(id);
         mapper.updatePartFromDto(body, part);
         return partRepository.save(part);
+    }
+
+    public List<Part> getAllParts(List<UUID> ids) {
+        List<Part> partsResponse = (List<Part>) partRepository.findAllById(ids);
+        if (partsResponse.isEmpty()) throw new ResourceIlegalArgumentException();
+        return partsResponse;
     }
 }

@@ -11,6 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,8 @@ import java.util.UUID;
 @Data
 @Entity
 @Table(name = "TB_SERVICES")
-public class Services {
+public class Services implements Serializable {
+    private static final long serialVersionUID =1L;
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -31,17 +33,13 @@ public class Services {
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
     @OneToOne(cascade = CascadeType.ALL )
-    @JoinColumn(name = "client_id", foreignKey = @ForeignKey(name = "UK_SERVICES_CLIENT"))
+    @JoinColumn(name = "client_id", foreignKey = @ForeignKey(name = "UK_SERVICES_CLIENT"), referencedColumnName = "id")
     private Client client;
     @OneToOne(cascade = CascadeType.ALL )
-    @JoinColumn(name = "car_id", foreignKey = @ForeignKey(name = "UK_SERVICES_CAR"))
-<<<<<<< HEAD
+    @JoinColumn(name = "car_id", foreignKey = @ForeignKey(name = "UK_SERVICES_CAR"), referencedColumnName = "id")
     private Car car;
-=======
-    private Car carId;
->>>>>>> 809778080c47413e1e0100ec2203ba01acd30381
     @OneToOne(cascade = CascadeType.ALL )
-    @JoinColumn(name = "mechanic_id", foreignKey = @ForeignKey(name = "UK_SERVICES_MECHANIC"))
+    @JoinColumn(name = "mechanic_id", foreignKey = @ForeignKey(name = "UK_SERVICES_MECHANIC"), referencedColumnName = "id")
     private Mechanic mechanic;
     @Column(nullable = false)
     private LocalDate serviceEstimatedDeliveryDate;

@@ -117,7 +117,7 @@ public class ClientService {
     //testar polimorfismo
     public Client clientExist(String id) {
         Optional<Client> obj = repository.findById(UUID.fromString(id));
-        if (!obj.isPresent()) throw new ResourceNotFoundException("Resource not found. Id ", id);
+        if (!obj.isPresent()) throw new ResourceNotFoundException("Client not found. Id ", id);
         return obj.get();
     }
 
