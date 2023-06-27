@@ -45,7 +45,7 @@ public class Services implements Serializable {
     private LocalDate serviceEstimatedDeliveryDate;
     @Column(nullable = false)
     private String description;
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "service_id", foreignKey = @ForeignKey(name = "UK_SERVICES_PART"))
     private List<Part> parts = new ArrayList<>();
     @Enumerated(EnumType.ORDINAL)
