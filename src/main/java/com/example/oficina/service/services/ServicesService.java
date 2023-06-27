@@ -12,7 +12,6 @@ import com.example.oficina.service.client.ClientService;
 import com.example.oficina.service.exceptions.ResourceNotFoundException;
 import com.example.oficina.service.mechanic.MechanicService;
 import com.example.oficina.service.part.PartService;
-import com.example.oficina.utils.services.ServicesMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.oficina.model.services.Services;
