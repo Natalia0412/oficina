@@ -52,5 +52,10 @@ public class MechanicService {
         if (res != null) throw new ResourceBadRequestException("Email is already exists");
     }
 
+    public Mechanic verifyEmailExist(String email) {
+        Mechanic res = mechanicRepository.findByEmail(email);
+        return  res;
+    }
+
 
 }

@@ -57,6 +57,12 @@ public class ClientService {
         return res;
     }
 
+    public Client verifyEmailExist(String email) {
+        Client res = repository.findByLogin(email);
+        return res;
+    }
+
+
     public Boolean verifyCpfCnpjExist(ClientDto body) {
         Boolean res = repository.existsByCpfCnpj(body.getCpf_cnpj());
         return res;
