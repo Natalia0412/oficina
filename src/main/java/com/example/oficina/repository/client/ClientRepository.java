@@ -9,8 +9,8 @@ import java.util.UUID;
 public interface ClientRepository extends JpaRepository<Client, UUID> {
     Boolean existsByEmail(String email);
 
-//    Optional<Client> findByEmail(String email);
-    Client findByEmail(String email);
+    Optional<Client> findByEmail(String email);
+//    Client findByEmail(String email);
 
     Boolean existsByCpfCnpj(String cpf_cnpj);
 

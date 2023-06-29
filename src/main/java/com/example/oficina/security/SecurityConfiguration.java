@@ -14,26 +14,29 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfiguration  {
+public class SecurityConfiguration {
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-        return http.authorizeHttpRequests(authorize -> {
-            authorize.requestMatchers(HttpMethod.POST, "/api/v1/client/login").permitAll();
-            authorize.requestMatchers(HttpMethod.POST, "/api/v1/mechanic/login").permitAll();
-            authorize.requestMatchers(HttpMethod.POST, "/api/v1/clients").permitAll();
-            authorize.requestMatchers(HttpMethod.GET, "/api/v1/clients").permitAll();
-            authorize.requestMatchers(HttpMethod.POST, "/api/v1/mechanics").permitAll();
-            authorize.anyRequest().authenticated();
-        })
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http
                 .csrf(c -> c.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .authorizeHttpRequests(authorize -> {
+                    authorize.requestMatchers(HttpMethod.POST, "/api/v1/client/login").permitAll();
+                    authorize.requestMatchers(HttpMethod.POST, "/api/v1/mechanic/login").permitAll();
+                    authorize.requestMatchers(HttpMethod.POST, "/api/v1/clients").permitAll();
+                    authorize.requestMatchers(HttpMethod.GET, "/api/v1/clients").permitAll();
+                    authorize.requestMatchers(HttpMethod.POST, "/api/v1/mechanics").permitAll();
+                    authorize.anyRequest().authenticated();
+                })
+
                 .build();
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception{
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();

@@ -4,6 +4,7 @@ package com.example.oficina.controller.exceptions;
 import com.example.oficina.service.exceptions.ResourceBadRequestException;
 import com.example.oficina.service.exceptions.ResourceIlegalArgumentException;
 import com.example.oficina.service.exceptions.ResourceNotFoundException;
+import com.example.oficina.service.exceptions.ResourceUserNameNotFound;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +38,16 @@ public class ResourceExceptionHandler {
     public ResponseEntity<StandardError> resourceNotFound(ResourceNotFoundException e, HttpServletRequest request) {
         String error = "Not Found";
         HttpStatus status = HttpStatus.NOT_FOUND;
+        StandardError err1 = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
+        return ResponseEntity
+                .status(status)
+                .body(err1);
+    }
+
+    @ExceptionHandler(ResourceUserNameNotFound.class)
+    public ResponseEntity<StandardError> resourceUserNameNotFound(ResourceUserNameNotFound e, HttpServletRequest request) {
+        String error = "Unauthorized";
+        HttpStatus status = HttpStatus.UNAUTHORIZED;
         StandardError err1 = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
         return ResponseEntity
                 .status(status)

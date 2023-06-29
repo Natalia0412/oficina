@@ -10,8 +10,6 @@ import java.time.ZoneOffset;
 import java.util.Date;
 
 
-
-
 @Service
 public class TokenService {
     public String createTokenClient(Client client) {
