@@ -1,8 +1,6 @@
 package com.example.oficina.service.client;
 
 import com.example.oficina.dto.client.ClientDto;
-
-import com.example.oficina.dto.client.ClientDtoPagination;
 import com.example.oficina.dto.client.ClientDtoResponse;
 import com.example.oficina.map.client.ClientMap;
 import com.example.oficina.model.car.Car;
@@ -10,12 +8,9 @@ import com.example.oficina.model.client.Client;
 import com.example.oficina.repository.client.ClientRepository;
 import com.example.oficina.service.exceptions.ResourceBadRequestException;
 import com.example.oficina.service.exceptions.ResourceNotFoundException;
-
 import com.example.oficina.utils.client.ClientMapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -46,34 +41,27 @@ public class ClientService {
 
         Client client = repository.save(ClientMap.clientDTOToClient(body));
 
-        ClientDtoResponse res = ClientMap.clientToClientDTO(client);
-
-        return res;
+        return ClientMap.clientToClientDTO(client);
 
     }
 
     public boolean verifyEmailExist(ClientDto body) {
-        Boolean res = repository.existsByEmail(body.getEmail());
-        return res;
+        return repository.existsByEmail(body.getEmail());
     }
 
-    public Client verifyEmailExist(String email) {
-        Client res = repository.findByLogin(email);
-        return res;
-    }
+//    public Client verifyEmailExist(String email) {
+//        return repository.findByLogin(email);
+//    }
 
 
     public Boolean verifyCpfCnpjExist(ClientDto body) {
-        Boolean res = repository.existsByCpfCnpj(body.getCpf_cnpj());
-        return res;
+        return repository.existsByCpfCnpj(body.getCpf_cnpj());
     }
 
     public String encryptPassword(String password) {
         BCryptPasswordEncoder encrypt = new BCryptPasswordEncoder();
 
-        String encryptedPassword = encrypt.encode(password);
-
-        return encryptedPassword;
+        return encrypt.encode(password);
     }
 
     public void getAllClient(int limit, int offset) {

@@ -6,6 +6,7 @@ import com.example.oficina.model.car.Car;
 import com.example.oficina.model.client.Client;
 import com.example.oficina.model.mechanic.Mechanic;
 import com.example.oficina.model.part.Part;
+import com.example.oficina.model.services.Services;
 import com.example.oficina.repository.services.ServiceRepository;
 import com.example.oficina.service.car.CarService;
 import com.example.oficina.service.client.ClientService;
@@ -14,7 +15,6 @@ import com.example.oficina.service.mechanic.MechanicService;
 import com.example.oficina.service.part.PartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.oficina.model.services.Services;
 
 import java.util.List;
 import java.util.Optional;

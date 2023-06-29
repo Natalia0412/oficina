@@ -8,7 +8,6 @@ import com.example.oficina.service.exceptions.ResourceBadRequestException;
 import com.example.oficina.service.exceptions.ResourceNotFoundException;
 import com.example.oficina.utils.mechanic.MechanicMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -48,13 +47,12 @@ public class MechanicService {
     }
 
     public void verifyEmailExist(MechanicDto body) {
-        Mechanic res = mechanicRepository.findByEmail(body.getEmail());
-        if (res != null) throw new ResourceBadRequestException("Email is already exists");
+        Mechanic mechanic = mechanicRepository.findByEmail(body.getEmail());
+        if (mechanic != null) throw new ResourceBadRequestException("Email is already exists");
     }
 
     public Mechanic verifyEmailExist(String email) {
-        Mechanic res = mechanicRepository.findByEmail(email);
-        return  res;
+        return mechanicRepository.findByEmail(email);
     }
 
 

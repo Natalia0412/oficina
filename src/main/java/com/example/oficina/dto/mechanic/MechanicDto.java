@@ -1,13 +1,12 @@
 package com.example.oficina.dto.mechanic;
+
 import com.example.oficina.model.mechanic.enums.Mechanic_Status;
 import com.fasterxml.jackson.annotation.JsonFormat;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-
 import java.util.List;
 
 @AllArgsConstructor

@@ -2,7 +2,6 @@ package com.example.oficina.controller.client;
 
 
 import com.example.oficina.dto.client.ClientDto;
-import com.example.oficina.dto.client.ClientDtoPagination;
 import com.example.oficina.dto.client.ClientDtoResponse;
 import com.example.oficina.model.client.Client;
 import com.example.oficina.service.client.ClientService;

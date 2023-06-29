@@ -39,7 +39,7 @@ public class PartService {
     }
 
     public List<Part> getAllParts(List<UUID> ids) {
-        List<Part> partsResponse = (List<Part>) partRepository.findAllById(ids);
+        List<Part> partsResponse =  partRepository.findAllById(ids);
         if (partsResponse.isEmpty()) throw new ResourceIlegalArgumentException();
         return partsResponse;
     }

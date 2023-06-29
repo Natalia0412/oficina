@@ -2,7 +2,6 @@ package com.example.oficina.utils.car;
 
 import com.example.oficina.dto.car.CarDto;
 import com.example.oficina.model.car.Car;
-import com.example.oficina.model.client.Client;
 import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")
