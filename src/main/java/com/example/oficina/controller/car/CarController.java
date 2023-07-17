@@ -2,11 +2,14 @@ package com.example.oficina.controller.car;
 
 import com.example.oficina.dto.car.CarDto;
 import com.example.oficina.model.car.Car;
+import com.example.oficina.model.client.Client;
 import com.example.oficina.service.car.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/clients/{idClient}/cars")
@@ -19,6 +22,10 @@ public class CarController {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.createCar(idClient, carDto));
     }
 
+    @GetMapping()
+    public ResponseEntity<List<Car>>getCar(@RequestParam int limit, @RequestParam int offset) {
+        return ResponseEntity.ok(service.getAll(limit, offset));
+    }
     @GetMapping("/{idCar}")
     public ResponseEntity<Car> getCarbyId(@PathVariable String idClient, @PathVariable String idCar) {
         return ResponseEntity.ok(service.getCarById(idClient, idCar));

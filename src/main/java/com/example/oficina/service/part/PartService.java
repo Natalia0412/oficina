@@ -40,7 +40,7 @@ public class PartService {
 
     public List<Part> getAllParts(List<UUID> ids) {
         List<Part> partsResponse =  partRepository.findAllById(ids);
-        if (partsResponse.isEmpty()) throw new ResourceIlegalArgumentException();
+        if (partsResponse.isEmpty()) throw new ResourceIlegalArgumentException("At least one, id not found");
         return partsResponse;
     }
 }

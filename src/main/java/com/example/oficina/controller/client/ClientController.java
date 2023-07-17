@@ -8,9 +8,12 @@ import com.example.oficina.service.client.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/clients")
@@ -32,6 +35,8 @@ public class ClientController {
 
     @GetMapping()
     public ResponseEntity<List<Client>> getClient() {
+//        Client client = (Client) SecurityContextHolder.getContext()
+//                .getAuthentication().
         return ResponseEntity.ok(clientService.getAll());
     }
     @GetMapping("/{id}")

@@ -20,9 +20,9 @@ public class AuthenticationService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        Optional<Client> optional = clientRepository.findByEmail(username);
-        if (optional.isPresent()) {
-            return optional.get();
+        Client  optional = clientRepository.findByEmail(username);
+        if (optional != null) {
+            return optional;
         }
         throw new ResourceUserNameNotFound("invalid email or password");
 
