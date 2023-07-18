@@ -13,7 +13,10 @@ import com.example.oficina.service.client.ClientService;
 import com.example.oficina.service.exceptions.ResourceNotFoundException;
 import com.example.oficina.service.mechanic.MechanicService;
 import com.example.oficina.service.part.PartService;
+import com.example.oficina.utils.OffsetBasedPageRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,7 +42,6 @@ public class ServicesService {
     private PartService partService;
 
 
-
     public Services createServices(ServiceDto dto) {
         Client client = clientService.clientExist(dto.getClientId());
         Car car = carService.getCarById(dto.getClientId(), dto.getCarId());
@@ -47,7 +49,7 @@ public class ServicesService {
         List<UUID> partIds = dto.getParts().stream().map(e -> e.getPartId()).collect(Collectors.toList());
         List<Part> partsOld = partService.getAllParts(partIds);
         partsOld.forEach(old -> dto.getParts().forEach(e -> {
-            if (old.getId().equals(e.getPartId()) ) {
+            if (old.getId().equals(e.getPartId())) {
                 old.setQtd(e.getQtd());
             }
         }));
@@ -59,33 +61,38 @@ public class ServicesService {
         return serviceRepository.save(services);
     }
 
+    public List<Services> getAll(int limit, int offset) {
+        Pageable pageable = new OffsetBasedPageRequest(limit, offset, Sort.by(Sort.Direction.DESC, "id"));
+        return serviceRepository.findAll(pageable).getContent();
+    }
+
     public Services getByIdServices(String id) {
         Optional<Services> obj = serviceRepository.findById(UUID.fromString(id));
-        if(!obj.isPresent()) throw new ResourceNotFoundException("Service not found. id", id);
+        if (!obj.isPresent()) throw new ResourceNotFoundException("Service not found. id", id);
         return obj.get();
     }
 
-    public Services updatePartial (String id, ServiceDto dto) {
+    public Services updatePartial(String id, ServiceDto dto) {
         Services services = this.getByIdServices(id);
-        if(dto.getClientId() != null) {
+        if (dto.getClientId() != null) {
             Client client = clientService.clientExist(dto.getClientId());
             services.setClient(client);
         }
-        if(dto.getCarId() != null) {
+        if (dto.getCarId() != null) {
             Car car = carService.getCarById(dto.getClientId(), dto.getCarId());
             services.setCar(car);
         }
 
-        if(dto.getMechanicId() != null) {
+        if (dto.getMechanicId() != null) {
             Mechanic mechanic = mechanicService.getMechanicById(dto.getMechanicId());
             services.setMechanic(mechanic);
         }
 
-        if(dto.getParts() != null) {
+        if (dto.getParts() != null) {
             List<UUID> partIds = dto.getParts().stream().map(e -> e.getPartId()).collect(Collectors.toList());
             List<Part> partsOld = partService.getAllParts(partIds);
             partsOld.forEach(old -> dto.getParts().forEach(e -> {
-                if (old.getId().equals(e.getPartId()) ) {
+                if (old.getId().equals(e.getPartId())) {
                     old.setQtd(e.getQtd());
                 }
             }));
@@ -93,15 +100,15 @@ public class ServicesService {
             services.setParts(partsOld);
         }
 
-        if(dto.getServiceEstimatedDeliveryDate() != null) {
+        if (dto.getServiceEstimatedDeliveryDate() != null) {
             services.setServiceEstimatedDeliveryDate(dto.getServiceEstimatedDeliveryDate());
         }
 
-        if(dto.getDescription() != null) {
+        if (dto.getDescription() != null) {
             services.setDescription(dto.getDescription());
         }
 
-        if(dto.getStatus() != null) {
+        if (dto.getStatus() != null) {
             services.setStatus(dto.getStatus());
         }
 

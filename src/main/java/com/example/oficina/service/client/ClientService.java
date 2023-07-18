@@ -1,6 +1,7 @@
 package com.example.oficina.service.client;
 
 import com.example.oficina.dto.client.ClientDto;
+import com.example.oficina.dto.client.ClientDtoPagination;
 import com.example.oficina.dto.client.ClientDtoResponse;
 import com.example.oficina.map.client.ClientMap;
 import com.example.oficina.model.car.Car;
@@ -8,9 +9,11 @@ import com.example.oficina.model.client.Client;
 import com.example.oficina.repository.client.ClientRepository;
 import com.example.oficina.service.exceptions.ResourceBadRequestException;
 import com.example.oficina.service.exceptions.ResourceNotFoundException;
+import com.example.oficina.utils.OffsetBasedPageRequest;
 import com.example.oficina.utils.client.ClientMapper;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -73,9 +76,14 @@ public class ClientService {
         //System.out.println(page);
     }
 
-    public List<Client> getAll() {
-        return repository.findAll();
+    public ClientDtoPagination getAll(int limit, int offset) {
+        Pageable pageable = new OffsetBasedPageRequest(limit, offset, Sort.by(Sort.Direction.DESC, "id"));
+        List<ClientDtoResponse> clientDtoResponseList = ClientMap.clientToClientDtoPagination(repository.findAll(pageable).getContent());
+        return ClientMap.clientDtoResponsePagination(limit, offset, clientDtoResponseList);
     }
+//    public List<Client> getAll() {
+//        return repository.findAll();
+//    }
 
     public ClientDtoResponse getClientById(String id) {
         Optional<Client> obj = repository.findById(UUID.fromString(id));

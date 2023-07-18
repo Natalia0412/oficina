@@ -23,7 +23,7 @@ public class CarController {
     }
 
     @GetMapping()
-    public ResponseEntity<List<Car>>getCar(@RequestParam int limit, @RequestParam int offset) {
+    public ResponseEntity<List<Car>>getCar(@RequestParam (required=false, defaultValue = "30")int limit, @RequestParam (required=false, defaultValue = "0")int offset) {
         return ResponseEntity.ok(service.getAll(limit, offset));
     }
     @GetMapping("/{idCar}")

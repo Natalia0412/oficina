@@ -6,10 +6,14 @@ import com.example.oficina.model.mechanic.Mechanic;
 import com.example.oficina.repository.mechanic.MechanicRepository;
 import com.example.oficina.service.exceptions.ResourceBadRequestException;
 import com.example.oficina.service.exceptions.ResourceNotFoundException;
+import com.example.oficina.utils.OffsetBasedPageRequest;
 import com.example.oficina.utils.mechanic.MechanicMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -25,6 +29,11 @@ public class MechanicService {
         this.verifyCpfExist(body);
         this.verifyEmailExist(body);
         return mechanicRepository.save(MechanicMap.mechanicDtoToMechanic(body));
+    }
+
+    public List<Mechanic> getAll(int limit, int offset) {
+        Pageable pageable = new OffsetBasedPageRequest(limit, offset, Sort.by(Sort.Direction.DESC, "id"));
+        return mechanicRepository.findAll(pageable).getContent();
     }
 
     public Mechanic getMechanicById(String id) {

@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/mechanics")
 public class MechanicController {
@@ -16,7 +18,12 @@ public class MechanicController {
 
     @PostMapping()
     public ResponseEntity<Mechanic> addMechanic(@RequestBody MechanicDto dto) {
-        return  ResponseEntity.status(HttpStatus.CREATED).body(mechanicService.createMechanic(dto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(mechanicService.createMechanic(dto));
+    }
+
+    @GetMapping()
+    public ResponseEntity<List<Mechanic>> getCar(@RequestParam(required = false, defaultValue = "30") int limit, @RequestParam(required = false, defaultValue = "0") int offset) {
+        return ResponseEntity.ok(mechanicService.getAll(limit, offset));
     }
 
     @GetMapping("/{id}")

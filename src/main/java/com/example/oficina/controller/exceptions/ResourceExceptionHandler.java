@@ -26,7 +26,7 @@ public class ResourceExceptionHandler {
 
     @ExceptionHandler(ResourceIlegalArgumentException.class)
     public ResponseEntity<StandardError> resourceIlegalArgument(ResourceIlegalArgumentException e, HttpServletRequest request) {
-        String error = "One or more Id does not exist";
+        String error = "Ilegal Argument Exception";
         HttpStatus status = HttpStatus.NOT_FOUND;
         StandardError err = new StandardError(Instant.now(), status.value(), error, e.getMessage(), request.getRequestURI());
         return ResponseEntity
