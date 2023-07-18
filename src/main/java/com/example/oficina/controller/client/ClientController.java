@@ -18,8 +18,6 @@ public class ClientController {
 
     @PostMapping()
     public ResponseEntity<ClientDtoResponse> addClient(@RequestBody ClientDto clientDto) {
-
-        // return  new ResponseEntity<Client>(clientService.createClient(clientDto), HttpStatus.CREATED);
         return ResponseEntity.status(HttpStatus.CREATED).body(clientService.createClient(clientDto));
     }
 
@@ -29,12 +27,7 @@ public class ClientController {
         return ResponseEntity.ok(clientService.getAll(limit, offset));
     }
 
-    //    @GetMapping()
-//    public ResponseEntity<List<Client>> getClient() {
-////        Client client = (Client) SecurityContextHolder.getContext()
-////                .getAuthentication().
-//        return ResponseEntity.ok(clientService.getAll());
-//    }
+
     @GetMapping("/{id}")
     public ResponseEntity<ClientDtoResponse> getClientById(@PathVariable String id) {
         return ResponseEntity.ok(clientService.getClientById(id));
