@@ -1,11 +1,6 @@
 package com.example.oficina.dto.services;
 
 
-import com.example.oficina.model.car.Car;
-import com.example.oficina.model.client.Client;
-import com.example.oficina.model.mechanic.Mechanic;
-
-
 import com.example.oficina.model.services.enums.Service_Status;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;

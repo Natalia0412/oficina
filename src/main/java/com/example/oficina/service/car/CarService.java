@@ -8,10 +8,14 @@ import com.example.oficina.repository.car.CarRepository;
 import com.example.oficina.service.client.ClientService;
 import com.example.oficina.service.exceptions.ResourceBadRequestException;
 import com.example.oficina.service.exceptions.ResourceNotFoundException;
+import com.example.oficina.utils.OffsetBasedPageRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import com.example.oficina.utils.car.CarMapper;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -26,6 +30,11 @@ public class CarService {
 
     @Autowired
     private CarMapper mapper;
+
+    public List<Car> getAll(int limit, int offset) {
+        Pageable pageable = new OffsetBasedPageRequest(limit, offset, Sort.by(Sort.Direction.DESC, "id"));
+        return carRepository.findAll(pageable).getContent();
+    }
 
     public Car createCar(String idClient, CarDto carDto) {
         Client client = clientService.clientExist(idClient);
@@ -63,5 +72,6 @@ public class CarService {
 
         return false;
     }
+
 
 }

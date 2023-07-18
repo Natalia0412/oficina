@@ -6,8 +6,11 @@ import com.example.oficina.model.part.Part;
 import com.example.oficina.repository.part.PartRepository;
 import com.example.oficina.service.exceptions.ResourceIlegalArgumentException;
 import com.example.oficina.service.exceptions.ResourceNotFoundException;
+import com.example.oficina.utils.OffsetBasedPageRequest;
 import com.example.oficina.utils.part.PartMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +29,12 @@ public class PartService {
         return partRepository.save(PartMap.partDtoToPart(partDto));
     }
 
+    public List<Part> getAll(int limit, int offset) {
+        Pageable pageable = new OffsetBasedPageRequest(limit, offset, Sort.by(Sort.Direction.DESC, "id"));
+        return partRepository.findAll(pageable).getContent();
+    }
+
+
     public Part getByIdPart(String id) {
         Optional<Part> obj = partRepository.findById(UUID.fromString(id));
         if (!obj.isPresent()) throw new ResourceNotFoundException("Part not found. Id ", id);
@@ -39,8 +48,8 @@ public class PartService {
     }
 
     public List<Part> getAllParts(List<UUID> ids) {
-        List<Part> partsResponse = (List<Part>) partRepository.findAllById(ids);
-        if (partsResponse.isEmpty()) throw new ResourceIlegalArgumentException();
+        List<Part> partsResponse = partRepository.findAllById(ids);
+        if (partsResponse.isEmpty()) throw new ResourceIlegalArgumentException("At least one, id not found");
         return partsResponse;
     }
 }

@@ -2,13 +2,11 @@ package com.example.oficina.dto.client;
 
 import com.example.oficina.model.client.enums.Client_Type;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Data
 

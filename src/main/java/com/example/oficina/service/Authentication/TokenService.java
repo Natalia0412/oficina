@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Date;
 
+
 @Service
 public class TokenService {
     public String createTokenClient(Client client) {
@@ -22,6 +23,11 @@ public class TokenService {
                         .toInstant(ZoneOffset.of("-03:00"))))
                 .sign(Algorithm.HMAC256("secreta"));
 
+    }
 
+    public String getSubject(String token) {
+        return JWT.require(Algorithm.HMAC256("secreta"))
+                .withIssuer("Client")
+                .build().verify(token).getSubject();
     }
 }

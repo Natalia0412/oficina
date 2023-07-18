@@ -1,6 +1,5 @@
 package com.example.oficina.repository.mechanic;
 
-import com.example.oficina.model.client.Client;
 import com.example.oficina.model.mechanic.Mechanic;
 import org.springframework.data.jpa.repository.JpaRepository;
 
